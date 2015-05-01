@@ -1,0 +1,61 @@
+<html>
+<head>
+  <title>Cron Jobs for user</title>
+<style>
+table, th, td {
+    border: 0px solid black;
+}
+</style>
+</head>
+<body>
+
+
+<h3>Cron jobs for SkyScape PERF shutdown</h3>
+
+
+<table>
+<tr>
+  <td>Hour</td>
+  <td>Minute</td>
+  <td>Command</td>
+  <td>Comment</td>
+  <td>&nbsp;</td>
+</tr>
+
+<tr>
+{% for cron in crons %}
+  <form action='/cron/change' method='POST'>
+
+
+  <td><select name='hour'>
+  {% for h in range(1,32) %}
+    {% if cron.hour == h %}
+     <option value={{h}} selected>{{h}}</option>
+    {% else %}
+     <option value={{h}}>{{h}}</option>
+    {% endif %}
+  {% endfor %}
+</td>
+
+  <td><select name='minute'>
+  {% for m in range(0,60) %}
+    {% if cron.minute == m %}
+     <option value={{m}} selected>{{m}}</option>
+    {% else %}
+     <option value={{m}}>{{m}}</option>
+    {% endif %}
+  {% endfor %}
+
+
+  <td>{{cron.command}}</td>
+  <td>{{cron.comment}}</td>
+  <td><input type='submit' value='save'></td>
+</tr>
+
+<input type='hidden' value='{{cron.command}}' name='command'>
+</form>
+{% endfor %}
+</table>
+
+</body>
+</html>
